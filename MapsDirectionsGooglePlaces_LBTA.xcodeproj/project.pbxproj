@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,8 @@
 		C76AB532236F3ADB00773EBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C76AB531236F3ADB00773EBD /* Assets.xcassets */; };
 		C76AB535236F3ADB00773EBD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C76AB534236F3ADB00773EBD /* Preview Assets.xcassets */; };
 		C76AB538236F3ADB00773EBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C76AB536236F3ADB00773EBD /* LaunchScreen.storyboard */; };
+		C76AB541236F3B9500773EBD /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76AB540236F3B9500773EBD /* MainController.swift */; };
+		C76AB544236F3D2C00773EBD /* LBTATools in Frameworks */ = {isa = PBXBuildFile; productRef = C76AB543236F3D2C00773EBD /* LBTATools */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,7 @@
 		C76AB534236F3ADB00773EBD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C76AB537236F3ADB00773EBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C76AB539236F3ADB00773EBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C76AB540236F3B9500773EBD /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C76AB544236F3D2C00773EBD /* LBTATools in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +60,7 @@
 		C76AB52A236F3ADA00773EBD /* MapsDirectionsGooglePlaces_LBTA */ = {
 			isa = PBXGroup;
 			children = (
+				C76AB53F236F3B8A00773EBD /* Main */,
 				C76AB52B236F3ADA00773EBD /* AppDelegate.swift */,
 				C76AB52D236F3ADA00773EBD /* SceneDelegate.swift */,
 				C76AB52F236F3ADA00773EBD /* ContentView.swift */,
@@ -75,6 +80,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		C76AB53F236F3B8A00773EBD /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				C76AB540236F3B9500773EBD /* MainController.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -91,6 +104,9 @@
 			dependencies = (
 			);
 			name = MapsDirectionsGooglePlaces_LBTA;
+			packageProductDependencies = (
+				C76AB543236F3D2C00773EBD /* LBTATools */,
+			);
 			productName = MapsDirectionsGooglePlaces_LBTA;
 			productReference = C76AB528236F3ADA00773EBD /* MapsDirectionsGooglePlaces_LBTA.app */;
 			productType = "com.apple.product-type.application";
@@ -119,6 +135,9 @@
 				Base,
 			);
 			mainGroup = C76AB51F236F3ADA00773EBD;
+			packageReferences = (
+				C76AB542236F3D2C00773EBD /* XCRemoteSwiftPackageReference "LBTATools" */,
+			);
 			productRefGroup = C76AB529236F3ADA00773EBD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -146,6 +165,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C76AB541236F3B9500773EBD /* MainController.swift in Sources */,
 				C76AB52C236F3ADA00773EBD /* AppDelegate.swift in Sources */,
 				C76AB52E236F3ADA00773EBD /* SceneDelegate.swift in Sources */,
 				C76AB530236F3ADA00773EBD /* ContentView.swift in Sources */,
@@ -342,6 +362,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C76AB542236F3D2C00773EBD /* XCRemoteSwiftPackageReference "LBTATools" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bhlvoong/LBTATools.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.12;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C76AB543236F3D2C00773EBD /* LBTATools */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C76AB542236F3D2C00773EBD /* XCRemoteSwiftPackageReference "LBTATools" */;
+			productName = LBTATools;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C76AB520236F3ADA00773EBD /* Project object */;
 }
