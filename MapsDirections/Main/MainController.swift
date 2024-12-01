@@ -19,7 +19,27 @@ class MainController: UIViewController {
         
         view.addSubview(mapView)
         mapView.fillSuperview()
+    }
+}
+
+// SwiftUI Preview
+import SwiftUI
+
+struct MainPreview: PreviewProvider {
+    static var previews: some View {
+        ContainerView()
+            .edgesIgnoringSafeArea(.all)
+    }
+    
+    struct ContainerView: UIViewControllerRepresentable {
+        func makeUIViewController(context: Context) -> MainController {
+            return MainController()
+        }
         
-        mapView.mapType = .hybrid
+        func updateUIViewController(_ uiViewController: MainController, context: Context) {
+            
+        }
+        
+        typealias UIViewControllerType = MainController
     }
 }
