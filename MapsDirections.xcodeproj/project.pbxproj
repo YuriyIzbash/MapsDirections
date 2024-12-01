@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -44,7 +44,7 @@
 		C76AB51F236F3ADA00773EBD = {
 			isa = PBXGroup;
 			children = (
-				C76AB52A236F3ADA00773EBD /* MapsDirectionsGooglePlaces_LBTA */,
+				C76AB52A236F3ADA00773EBD /* MapsDirections */,
 				C76AB529236F3ADA00773EBD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -57,7 +57,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C76AB52A236F3ADA00773EBD /* MapsDirectionsGooglePlaces_LBTA */ = {
+		C76AB52A236F3ADA00773EBD /* MapsDirections */ = {
 			isa = PBXGroup;
 			children = (
 				C76AB53F236F3B8A00773EBD /* Main */,
@@ -69,7 +69,7 @@
 				C76AB539236F3ADB00773EBD /* Info.plist */,
 				C76AB533236F3ADB00773EBD /* Preview Content */,
 			);
-			path = MapsDirectionsGooglePlaces_LBTA;
+			path = MapsDirections;
 			sourceTree = "<group>";
 		};
 		C76AB533236F3ADB00773EBD /* Preview Content */ = {
@@ -117,8 +117,9 @@
 		C76AB520236F3ADA00773EBD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1120;
-				LastUpgradeCheck = 1120;
+				LastUpgradeCheck = 1600;
 				ORGANIZATIONNAME = "Brian Voong";
 				TargetAttributes = {
 					C76AB527236F3ADA00773EBD = {
@@ -126,7 +127,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C76AB523236F3ADA00773EBD /* Build configuration list for PBXProject "MapsDirectionsGooglePlaces_LBTA" */;
+			buildConfigurationList = C76AB523236F3ADA00773EBD /* Build configuration list for PBXProject "MapsDirections" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -212,6 +213,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -222,6 +224,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -272,6 +275,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -282,6 +286,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -305,15 +310,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"MapsDirectionsGooglePlaces_LBTA/Preview Content\"";
-				DEVELOPMENT_TEAM = 4HZZVGNXGK;
+				DEVELOPMENT_ASSET_PATHS = "\"MapsDirections/Preview Content\"";
+				DEVELOPMENT_TEAM = WYP88K3VD6;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = MapsDirectionsGooglePlaces_LBTA/Info.plist;
+				INFOPLIST_FILE = MapsDirections/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.letsbuildthatapp.MapsDirectionsGooglePlaces-LBTA";
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsbuildthatapp.MapsDirections;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -325,15 +330,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"MapsDirectionsGooglePlaces_LBTA/Preview Content\"";
-				DEVELOPMENT_TEAM = 4HZZVGNXGK;
+				DEVELOPMENT_ASSET_PATHS = "\"MapsDirections/Preview Content\"";
+				DEVELOPMENT_TEAM = WYP88K3VD6;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = MapsDirectionsGooglePlaces_LBTA/Info.plist;
+				INFOPLIST_FILE = MapsDirections/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.letsbuildthatapp.MapsDirectionsGooglePlaces-LBTA";
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsbuildthatapp.MapsDirections;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -343,7 +348,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C76AB523236F3ADA00773EBD /* Build configuration list for PBXProject "MapsDirectionsGooglePlaces_LBTA" */ = {
+		C76AB523236F3ADA00773EBD /* Build configuration list for PBXProject "MapsDirections" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C76AB53A236F3ADB00773EBD /* Debug */,
