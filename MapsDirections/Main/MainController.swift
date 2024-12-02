@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 import LBTATools
-import SwiftUI
+
 
 extension MainController: MKMapViewDelegate {
     
@@ -34,15 +34,16 @@ class MainController: UIViewController {
         
         mapView.fillSuperview()
         
-//        setupAnnotationsForMap()
+        //        setupAnnotationsForMap()
         
         performLocalSearch()
         
+        setupSearchUI()
     }
     
     fileprivate func setupRegionForMap() {
         let centerCoordinate = CLLocationCoordinate2D(latitude: 37.7666, longitude: -122.427290)
-        let span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
+        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         let region = MKCoordinateRegion(center: centerCoordinate, span: span)
         mapView.setRegion(region, animated: true)
     }
@@ -65,7 +66,7 @@ class MainController: UIViewController {
     
     fileprivate func performLocalSearch() {
         let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = "Apple"
+        request.naturalLanguageQuery = searchTextField.text
         request.region = mapView.region
         
         let localSearch = MKLocalSearch(request: request)
@@ -76,29 +77,11 @@ class MainController: UIViewController {
                 return
             }
             // Success
+            //remove old annotations
+            self.mapView.removeAnnotations(self.mapView.annotations)
+            
             resp?.mapItems.forEach({ (mapItem) in
-//                print(mapItem.placemark.subThoroughfare ?? "")
-                let placemark = mapItem.placemark
-                var addrressString = ""
-                if placemark.subThoroughfare != nil {
-                    addrressString = placemark.subThoroughfare! + " "
-                }
-                if placemark.thoroughfare != nil {
-                    addrressString += placemark.thoroughfare! + ", "
-                }
-                if placemark.postalCode != nil {
-                    addrressString += placemark.postalCode! + " "
-                }
-                if placemark.locality != nil {
-                    addrressString += placemark.locality! + ", "
-                }
-                if placemark.administrativeArea != nil {
-                    addrressString += placemark.administrativeArea! + " "
-                }
-                if placemark.country != nil {
-                    addrressString += placemark.country!
-                }
-                print(addrressString)
+                print(mapItem.address())
                 
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = mapItem.placemark.coordinate
@@ -108,25 +91,74 @@ class MainController: UIViewController {
             self.mapView.showAnnotations(self.mapView.annotations, animated: true)
         }
     }
+
+    let searchTextField = UITextField(placeholder: "Search...")
     
-    // SwiftUI Preview
-    
-    struct MainPreview: PreviewProvider {
-        static var previews: some View {
-            ContainerView()
-                .edgesIgnoringSafeArea(.all)
-        }
+    fileprivate func setupSearchUI() {
         
-        struct ContainerView: UIViewControllerRepresentable {
-            func makeUIViewController(context: Context) -> MainController {
-                return MainController()
-            }
-            
-            func updateUIViewController(_ uiViewController: MainController, context: Context) {
-                
-            }
-            
-            typealias UIViewControllerType = MainController
+        let whiteContainer = UIView(backgroundColor: .white)
+        view.addSubview(whiteContainer)
+        whiteContainer.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 16))
+        whiteContainer.stack(searchTextField).withMargins(.allSides(16))
+        
+        // listen for text changes and then perform new search
+//        searchTextField.addTarget(self, action: #selector(handleSearchChanges), for: .editingChanged)
+        
+        // Search Throttling
+        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: searchTextField).debounce(for: .milliseconds(500), scheduler: RunLoop.main).sink { (_) in
+            self.performLocalSearch()
         }
     }
+    
+    @objc fileprivate func handleSearchChanges() {
+        performLocalSearch()
+    }
 }
+
+extension MKMapItem {
+    func address() -> String {
+        
+        var addrressString = ""
+        if placemark.subThoroughfare != nil {
+            addrressString = placemark.subThoroughfare! + " "
+        }
+        if placemark.thoroughfare != nil {
+            addrressString += placemark.thoroughfare! + ", "
+        }
+        if placemark.postalCode != nil {
+            addrressString += placemark.postalCode! + " "
+        }
+        if placemark.locality != nil {
+            addrressString += placemark.locality! + ", "
+        }
+        if placemark.administrativeArea != nil {
+            addrressString += placemark.administrativeArea! + " "
+        }
+        if placemark.country != nil {
+            addrressString += placemark.country!
+        }
+        return addrressString
+    }
+}
+    // SwiftUI Preview
+import SwiftUI
+
+struct MainPreview: PreviewProvider {
+    static var previews: some View {
+        ContainerView()
+            .edgesIgnoringSafeArea(.all)
+    }
+    
+    struct ContainerView: UIViewControllerRepresentable {
+        func makeUIViewController(context: Context) -> MainController {
+            return MainController()
+        }
+        
+        func updateUIViewController(_ uiViewController: MainController, context: Context) {
+            
+        }
+        
+        typealias UIViewControllerType = MainController
+    }
+}
+
