@@ -1,14 +1,14 @@
 //
 //  MainController.swift
-//  MapsDirectionsGooglePlaces_LBTA
+//  MapsDirections
 //
-//  Created by Brian Voong on 11/3/19.
-//  Copyright © 2019 Brian Voong. All rights reserved.
+//  Created by Yuriy Izbash
 //
 
 import UIKit
 import MapKit
 import LBTATools
+import Combine
 
 
 extension MainController: MKMapViewDelegate {
@@ -24,6 +24,8 @@ extension MainController: MKMapViewDelegate {
 class MainController: UIViewController {
     
     let mapView = MKMapView()
+    let searchTextField = UITextField(placeholder: "Search...")
+    private var subscriptions = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +35,11 @@ class MainController: UIViewController {
         view.addSubview(mapView)
         
         mapView.fillSuperview()
+        view.layoutIfNeeded()
+        assert(!mapView.frame.width.isNaN, "MapView width is NaN")
+        assert(!mapView.frame.height.isNaN, "MapView height is NaN")
+        
+        setupRegionForMap()
         
         //        setupAnnotationsForMap()
         
@@ -44,6 +51,13 @@ class MainController: UIViewController {
     fileprivate func setupRegionForMap() {
         let centerCoordinate = CLLocationCoordinate2D(latitude: 37.7666, longitude: -122.427290)
         let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        
+        // Validate values
+        assert(!centerCoordinate.latitude.isNaN, "Latitude is NaN")
+        assert(!centerCoordinate.longitude.isNaN, "Longitude is NaN")
+        assert(!span.latitudeDelta.isNaN, "Latitude Delta is NaN")
+        assert(!span.longitudeDelta.isNaN, "Longitude Delta is NaN")
+        
         let region = MKCoordinateRegion(center: centerCoordinate, span: span)
         mapView.setRegion(region, animated: true)
     }
@@ -65,34 +79,43 @@ class MainController: UIViewController {
     }
     
     fileprivate func performLocalSearch() {
+        guard let query = searchTextField.text, !query.isEmpty else {
+                print("Search query is empty")
+                return
+            }
+        
         let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = searchTextField.text
-        request.region = mapView.region
+        let searchRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
+                                              span: MKCoordinateSpan(latitudeDelta: 1.0, longitudeDelta: 1.0))
+        let refinedQuery = "\(query) near San Francisco"
+        request.naturalLanguageQuery = refinedQuery
+        request.region = searchRegion
         
         let localSearch = MKLocalSearch(request: request)
         localSearch.start { (resp, err) in
-            // Failure
             if let err = err {
                 print("Failed local search. Error:", err)
                 return
             }
-            // Success
-            //remove old annotations
-            self.mapView.removeAnnotations(self.mapView.annotations)
+            guard let results = resp?.mapItems else {
+                print("No results found.")
+                return
+            }
+            print("Number of results: \(results.count)")
+            results.forEach { print($0.name ?? "No Name", $0.placemark.coordinate) }
             
-            resp?.mapItems.forEach({ (mapItem) in
-                print(mapItem.address())
-                
+            self.mapView.removeAnnotations(self.mapView.annotations)
+            results.forEach { mapItem in
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = mapItem.placemark.coordinate
                 annotation.title = mapItem.name
                 self.mapView.addAnnotation(annotation)
-            })
+            }
             self.mapView.showAnnotations(self.mapView.annotations, animated: true)
         }
     }
 
-    let searchTextField = UITextField(placeholder: "Search...")
+
     
     fileprivate func setupSearchUI() {
         
@@ -105,9 +128,14 @@ class MainController: UIViewController {
 //        searchTextField.addTarget(self, action: #selector(handleSearchChanges), for: .editingChanged)
         
         // Search Throttling
-        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: searchTextField).debounce(for: .milliseconds(500), scheduler: RunLoop.main).sink { (_) in
-            self.performLocalSearch()
-        }
+        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: searchTextField)
+            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                print("Search text: \(self.searchTextField.text ?? "nil")")
+                self.performLocalSearch()
+            }
+            .store(in: &subscriptions)
     }
     
     @objc fileprivate func handleSearchChanges() {
