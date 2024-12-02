@@ -1,8 +1,10 @@
 //
 //  AppDelegate.swift
-//  MapsDirectionsGooglePlaces_LBTA
+//  MapsDirections
 //
 //  Created by Brian Voong on 11/3/19.
+//  Modified by Yuriy Izbash on 1/12/24.
+//
 //  Copyright © 2019 Brian Voong. All rights reserved.
 //
 

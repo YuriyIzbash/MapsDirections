@@ -2,7 +2,8 @@
 //  MainController.swift
 //  MapsDirections
 //
-//  Created by Yuriy Izbash
+//  Created by Yuriy Izbash on 1. 12. 24.
+//  Copyright © 2024 Brian Voong. All rights reserved.
 //
 
 import UIKit
@@ -46,6 +47,9 @@ class MainController: UIViewController {
         performLocalSearch()
         
         setupSearchUI()
+        
+        setupLocationCarousel()
+        
     }
     
     fileprivate func setupRegionForMap() {
@@ -140,6 +144,16 @@ class MainController: UIViewController {
     
     @objc fileprivate func handleSearchChanges() {
         performLocalSearch()
+    }
+    
+    let locationsController = LocationCarouselController(scrollDirection: .horizontal)
+    
+    fileprivate func setupLocationCarousel() {
+        
+        let locationsView = locationsController.view!
+        
+        view.addSubview(locationsView)
+        locationsView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, size: .init(width: 0, height: 150))
     }
 }
 
