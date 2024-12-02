@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MapKit
 import LBTATools
 import Combine
 
@@ -42,7 +41,7 @@ class MainController: UIViewController {
         
         setupRegionForMap()
         
-        //        setupAnnotationsForMap()
+//      setupAnnotationsForMap()
         
         performLocalSearch()
         
@@ -50,6 +49,7 @@ class MainController: UIViewController {
         
         setupLocationCarousel()
         
+        locationsController.mainController = self
     }
     
     fileprivate func setupRegionForMap() {
@@ -109,12 +109,19 @@ class MainController: UIViewController {
             results.forEach { print($0.name ?? "No Name", $0.placemark.coordinate) }
             
             self.mapView.removeAnnotations(self.mapView.annotations)
+            self.locationsController.items.removeAll()
             results.forEach { mapItem in
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = mapItem.placemark.coordinate
                 annotation.title = mapItem.name
                 self.mapView.addAnnotation(annotation)
+                
+                // tell my locationsCarouselController
+                self.locationsController.items.append(mapItem)
             }
+            
+            self.locationsController.collectionView.scrollToItem(at: [0, 0], at: .centeredHorizontally, animated: true)
+            
             self.mapView.showAnnotations(self.mapView.annotations, animated: true)
         }
     }
@@ -157,33 +164,9 @@ class MainController: UIViewController {
     }
 }
 
-extension MKMapItem {
-    func address() -> String {
-        
-        var addrressString = ""
-        if placemark.subThoroughfare != nil {
-            addrressString = placemark.subThoroughfare! + " "
-        }
-        if placemark.thoroughfare != nil {
-            addrressString += placemark.thoroughfare! + ", "
-        }
-        if placemark.postalCode != nil {
-            addrressString += placemark.postalCode! + " "
-        }
-        if placemark.locality != nil {
-            addrressString += placemark.locality! + ", "
-        }
-        if placemark.administrativeArea != nil {
-            addrressString += placemark.administrativeArea! + " "
-        }
-        if placemark.country != nil {
-            addrressString += placemark.country!
-        }
-        return addrressString
-    }
-}
     // SwiftUI Preview
 import SwiftUI
+import MapKit
 
 struct MainPreview: PreviewProvider {
     static var previews: some View {
